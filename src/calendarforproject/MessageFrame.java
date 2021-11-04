@@ -5,11 +5,16 @@
  */
 package calendarforproject;
 
+import java.awt.Color;
 import java.awt.Font;
+import javax.swing.BorderFactory;
 
 /**
- *
- * @author HP
+ * This class is for showing description of tasks and meeting.
+ * 
+ * @author Sadat Arefin Rafat,180041106
+ * @author Shams Tanveer Jim,180041107
+ * @author Faysal Mahmud,180041117
  */
 public class MessageFrame extends javax.swing.JFrame {
 
@@ -51,17 +56,16 @@ public class MessageFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *  This public function shows the description of tasks and meetings.
+     * 
+     * @param description String that contains the description, coming from the MainMenu class.
+     */
     public void show_description(String description) {
-        String corrected_description = new String();
-        for (int j = 1; j <= description.length(); j++) {
-            if (j % 30 == 0) {
-                corrected_description = corrected_description + "\n" + description.charAt(j - 1);
-            } else {
-                corrected_description = corrected_description + description.charAt(j - 1);
-            }
-        }
-        description= corrected_description;
         descriptionText.setText(description);
+        descriptionText.setLineWrap(true);
+        descriptionText.setWrapStyleWord(true);
+        descriptionText.setBorder(BorderFactory.createBevelBorder(1));
         descriptionText.setEditable(false);
         descriptionText.setFont(new Font("TimesRoman", Font.BOLD, 25));
     }

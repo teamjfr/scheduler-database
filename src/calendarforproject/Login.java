@@ -22,10 +22,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.util.prefs.Preferences;
+import javax.swing.SwingUtilities;
 
 /**
- *
- * @author HP
+ * Login class represents the form for sign in or sign up and deals with the user database to authenticate the users.
+ * 
+ * @author Sadat Arefin Rafat,180041106
+ * @author Shams Tanveer Jim,180041107
+ * @author Faysal Mahmud,180041117
  */
 public class Login extends javax.swing.JFrame {
 
@@ -44,11 +49,46 @@ public class Login extends javax.swing.JFrame {
     int checkbox_flag = 0;
     JPanel f2 = new JPanel();
     JLabel for_message = new JLabel();
+    
 
+     
+          Preferences pref;
+    public void rememberMe(){
+        pref=Preferences.userNodeForPackage(this.getClass());
+        String value=pref.get("emailid","");
+        String value1=pref.get("password","");
+        System.out.println(login_email_id);
+        if (!value.equals("") && !value1.equals("")) {
+            login_email_id=value;
+            login_password=value1;
+          signinemailidText.setText(value);
+          loginPasswordField.setText(value1);
+          remember.setSelected(true);
+        }     
+    }
+     public void remove(){
+         signinemailidText.setText("");
+          loginPasswordField.setText("");
+       pref.remove("emailid");
+       pref.remove("password");
+       remember.setSelected(false);
+    }
+
+    
     public Login() {
         initComponents();
+        
+        rememberMe();
+        
         signupPanel.setVisible(false);
+        //signinPanel.setVisible(false);
+        
     }
+    
+   
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -100,9 +140,10 @@ public class Login extends javax.swing.JFrame {
         userName1 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
         userName2 = new javax.swing.JLabel();
-        signinButton = new javax.swing.JLabel();
         forgetpasswordLabel = new javax.swing.JLabel();
         loginPasswordField = new javax.swing.JPasswordField();
+        remember = new javax.swing.JCheckBox();
+        realsigninButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(2000, 1050));
@@ -128,8 +169,8 @@ public class Login extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 signinLabelButtonMouseEntered(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                signinLabelButtonMouseReleased(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signinLabelButtonMouseExited(evt);
             }
         });
         jPanel2.add(signinLabelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(549, 11, -1, -1));
@@ -344,6 +385,12 @@ public class Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signupLabelButtonMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signupLabelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signupLabelButtonMouseExited(evt);
+            }
         });
         jPanel4.add(signupLabelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 140, -1));
         jPanel4.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 470, 20));
@@ -378,16 +425,6 @@ public class Login extends javax.swing.JFrame {
         userName2.setText("Enter Password");
         jPanel4.add(userName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, -1, -1));
 
-        signinButton.setBackground(new java.awt.Color(0, 51, 153));
-        signinButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        signinButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarforproject/button (8).png"))); // NOI18N
-        signinButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                signinButtonMouseClicked(evt);
-            }
-        });
-        jPanel4.add(signinButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 640, 120, -1));
-
         forgetpasswordLabel.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
         forgetpasswordLabel.setForeground(new java.awt.Color(255, 255, 255));
         forgetpasswordLabel.setText("Forgot Paaword?");
@@ -409,6 +446,28 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel4.add(loginPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 470, 30));
+
+        remember.setBackground(new java.awt.Color(0, 0, 51));
+        remember.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        remember.setForeground(new java.awt.Color(255, 255, 255));
+        remember.setText("Remeber Me");
+        remember.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rememberActionPerformed(evt);
+            }
+        });
+        jPanel4.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 590, -1, -1));
+
+        realsigninButton.setBackground(new java.awt.Color(0, 51, 240));
+        realsigninButton.setForeground(new java.awt.Color(255, 255, 255));
+        realsigninButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarforproject/button (8).png"))); // NOI18N
+        realsigninButton.setBorderPainted(false);
+        realsigninButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                realsigninButtonActionPerformed(evt);
+            }
+        });
+        jPanel4.add(realsigninButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 630, 130, 60));
 
         signinPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(865, 34, 840, 880));
 
@@ -472,11 +531,6 @@ public class Login extends javax.swing.JFrame {
         signinLabelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarforproject/button (5).png"))); // NOI18N
     }//GEN-LAST:event_signinLabelButtonMouseEntered
 
-    private void signinLabelButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signinLabelButtonMouseReleased
-        // TODO add your handling code here:
-        signinLabelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarforproject/button (3).png"))); // NOI18N
-    }//GEN-LAST:event_signinLabelButtonMouseReleased
-
     private void signinemailidTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinemailidTextActionPerformed
         // TODO add your handling code here:
         login_email_id = signinemailidText.getText();
@@ -511,12 +565,12 @@ public class Login extends javax.swing.JFrame {
                             "Security Purpose", JOptionPane.OK_CANCEL_OPTION);
 
                     if (result == JOptionPane.OK_OPTION) {
-                        security_answer = answer_text.getText() + "qqqqqq";
+                        security_answer = answer_text.getText();
                         security_question = question_text.getText();
                         if (!security_answer.isEmpty() && !security_question.isEmpty()) {
 
                             try {
-                                myconn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users_database", "root", "root");
+                                myconn = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/rdbms_database", "rdbms_user", "Iutuser18");
                                 mysmt = myconn.createStatement();
 
                                 String sql = "insert into user_table(emailid,password,phoneno,dobirth,secanswer,secquestion) values(?,?,?,?,?,?)";
@@ -583,56 +637,7 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_checkBoxMouseClicked
 
-    private void signinButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signinButtonMouseClicked
-        // TODO add your handling code here:
-        for_message.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        if (!login_email_id.equals("") && !login_password.equals("")) {
-            try {
-                myconn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users_database", "root", "root");
-                mysmt = myconn.createStatement();
-                myrs = mysmt.executeQuery("select password from user_table where emailid='" + login_email_id + "'");
-
-                while (myrs.next()) {
-                    database_password = myrs.getString("password");
-                    if (database_password.equals(login_password)) {
-                        login_flag = 1;
-                        System.out.println("Successful");
-                    } else {
-                        login_flag = 0;
-                    }
-                }
-
-                myrs.close();
-                mysmt.close();
-                myconn.close();
-                if (login_flag == 1) {
-                    for_message.setText("Sign In Successfully.");
-                    f2.add(for_message);
-                    JOptionPane.showMessageDialog(null, f2);
-                    dispose();
-                    calendar obj1 = new calendar();
-                    obj1.setBounds(0, 0, 2000, 1050);
-                    obj1.setVisible(true);
-                } else {
-                    for_message.setText("Error in Email id or Password.");
-                    f2.add(for_message);
-                    JOptionPane.showMessageDialog(null, f2);
-
-                }
-
-            } catch (SQLException e) {
-                for_message.setText("" + e);
-                f2.add(for_message);
-                JOptionPane.showMessageDialog(null, f2);
-            }
-        } else {
-            for_message.setText("Email ID and Password Can Not Be Empty");
-            f2.add(for_message);
-            JOptionPane.showMessageDialog(null, f2);
-        }
-
-    }//GEN-LAST:event_signinButtonMouseClicked
-
+   
     private void forgetpasswordLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgetpasswordLabelMouseClicked
         // TODO add your handling code here:
         signupPanel.setVisible(false);
@@ -648,9 +653,9 @@ public class Login extends javax.swing.JFrame {
         JTextField phone_text = new JTextField(15);
         JTextField email_text = new JTextField(25);
         JLabel dob = new JLabel("Enter Your Date of Birth");
-        JLabel que = new JLabel("Write The Question You Provided");
-        JLabel ans = new JLabel("WWrite The Answer You Provided");
-        JLabel phn = new JLabel("Write The Provided Phone Number");
+        JLabel que = new JLabel("The Question You Provided");
+        JLabel ans = new JLabel("Write The Answer You Provided");
+        JLabel phn = new JLabel("Write The Phone Number You Provided");
         JLabel eid = new JLabel("Write Your Emial ID");
         Font f1 = new Font("TimesRoman", Font.BOLD, 20);
         for_message.setFont(f1);
@@ -671,8 +676,6 @@ public class Login extends javax.swing.JFrame {
         sc.add(phone_text);
         sc.add(dob);
         sc.add(dateofbirth);
-        sc.add(que);
-        sc.add(question_text);
         sc.add(ans);
         sc.add(answer_text);
 
@@ -683,12 +686,11 @@ public class Login extends javax.swing.JFrame {
             login_email_id = email_text.getText();
             a = phone_text.getText();
             b = sdf.format(dateofbirth.getDate());
-            c = question_text.getText();
             d = answer_text.getText();
 
-            if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty()) {
+            if (!a.isEmpty() && !b.isEmpty() && !d.isEmpty()) {
                 try {
-                    myconn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users_database", "root", "root");
+                    myconn = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/rdbms_database", "rdbms_user", "Iutuser18");
                     mysmt = myconn.createStatement();
                     myrs = mysmt.executeQuery("select password,phoneno,dobirth,secanswer,secquestion from user_table where emailid='" + login_email_id + "'");
 
@@ -698,7 +700,7 @@ public class Login extends javax.swing.JFrame {
                         g = myrs.getString("dobirth");
                         h = myrs.getString("secanswer");
                         i = myrs.getString("secquestion");
-                        if (a.equals(f) && b.equals(g) && c.equals(i) && d.equals(h)) {
+                        if (a.equals(f) && b.equals(g) && d.equals(h)) {
                             security_flag = 1;
                         } else {
                             security_flag = 0;
@@ -800,6 +802,84 @@ public class Login extends javax.swing.JFrame {
         loginPasswordField.setText(login_password);
     }//GEN-LAST:event_loginPasswordFieldMouseClicked
 
+    private void signupLabelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupLabelButtonMouseEntered
+        // TODO add your handling code here:
+        signupLabelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarforproject/button (1).png"))); 
+    }//GEN-LAST:event_signupLabelButtonMouseEntered
+
+    private void signupLabelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupLabelButtonMouseExited
+        // TODO add your handling code here:
+        signupLabelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarforproject/button (2).png"))); 
+    }//GEN-LAST:event_signupLabelButtonMouseExited
+
+    private void signinLabelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signinLabelButtonMouseExited
+        // TODO add your handling code here:
+        signinLabelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarforproject/button (3).png"))); 
+    }//GEN-LAST:event_signinLabelButtonMouseExited
+
+    private void rememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rememberActionPerformed
+
+    private void realsigninButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realsigninButtonActionPerformed
+        // TODO add your handling code here:
+         for_message.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        if (!login_email_id.equals("") && !login_password.equals("")) {
+            try {
+                myconn = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/rdbms_database", "rdbms_user", "Iutuser18");
+                mysmt = myconn.createStatement();
+                myrs = mysmt.executeQuery("select password from user_table where emailid='" + login_email_id + "'");
+
+                while (myrs.next()) {
+                    database_password = myrs.getString("password");
+                    if (database_password.equals(login_password)) {
+                        login_flag = 1;
+                        if(remember.isSelected()){
+                         
+                            pref.put("emailid",login_email_id);
+                            pref.put("password",login_password);
+                        }
+                        else{
+                          
+                            pref.remove("emailid");
+                            pref.remove("password");
+                        }
+                        System.out.println("Successful");
+                    } else {
+                        login_flag = 0;
+                    }
+                }
+
+                myrs.close();
+                mysmt.close();
+                myconn.close();
+                if (login_flag == 1) {
+                    for_message.setText("Sign In Successfully.");
+                    f2.add(for_message);
+                    JOptionPane.showMessageDialog(null, f2);
+                    dispose();
+                    calendar obj1 = new calendar();
+                    obj1.setBounds(0, 0, 2000, 1050);
+                    obj1.setVisible(true);
+                } else {
+                    for_message.setText("Error in Email id or Password.");
+                    f2.add(for_message);
+                    JOptionPane.showMessageDialog(null, f2);
+
+                }
+
+            } catch (SQLException e) {
+                for_message.setText("" + e);
+                f2.add(for_message);
+                JOptionPane.showMessageDialog(null, f2);
+            }
+        } else {
+            for_message.setText("Email ID and Password Can Not Be Empty");
+            f2.add(for_message);
+            JOptionPane.showMessageDialog(null, f2);
+        }
+    }//GEN-LAST:event_realsigninButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -862,7 +942,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField loginPasswordField;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField phonenoText;
-    private javax.swing.JLabel signinButton;
+    private javax.swing.JButton realsigninButton;
+    private javax.swing.JCheckBox remember;
     private javax.swing.JLabel signinLabelButton;
     private javax.swing.JPanel signinPanel;
     private javax.swing.JTextField signinemailidText;

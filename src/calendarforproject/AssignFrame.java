@@ -8,8 +8,11 @@ package calendarforproject;
 import javax.swing.DefaultListModel;
 
 /**
- *
- * @author HP
+ * AssignFrame class represents the frame for adding email id/s.
+ * 
+ * @author Sadat Arefin Rafat,180041106
+ * @author Shams Tanveer Jim,180041107
+ * @author Faysal Mahmud,180041117
  */
 public class AssignFrame extends javax.swing.JFrame {
 
@@ -41,9 +44,9 @@ public class AssignFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listforgroup = new javax.swing.JList<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(216, 195, 165));
+        jPanel1.setBackground(new java.awt.Color(138, 193, 207));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Add Email Id");

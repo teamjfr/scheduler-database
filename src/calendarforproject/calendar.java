@@ -19,8 +19,11 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 /**
- *
- * @author HP
+ * calendar class represents the calendar and deals with date and time. 
+ * 
+ * @author Sadat Arefin Rafat,180041106
+ * @author Shams Tanveer Jim,180041107
+ * @author Faysal Mahmud,180041117
  */
 public class calendar extends javax.swing.JFrame implements ActionListener {
 
@@ -28,12 +31,11 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
      * Creates new form calendar
      */
     private GregorianCalendar cal = new GregorianCalendar();
+    GregorianCalendar cal1;
     JButton calendarDay[] = new JButton[31];
     int month = cal.get(Calendar.MONTH);
-    int year = cal.get(Calendar.YEAR);
-    
+    int year = cal.get(Calendar.YEAR);   
     static String selected_date=null;
-    
     MONTHS[] Months = MONTHS.values();
 
     public calendar() {
@@ -93,11 +95,6 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
         jTextField8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField8.setText("MON");
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
-            }
-        });
         jPanel2.add(jTextField8);
 
         jTextField9.setBackground(new java.awt.Color(0, 102, 0));
@@ -116,11 +113,6 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
         jTextField11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField11.setText("THU");
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
         jPanel2.add(jTextField11);
 
         jTextField12.setBackground(new java.awt.Color(153, 153, 255));
@@ -224,6 +216,11 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This function works to move to the previous month when previous button is clicked
+     * 
+     * @param evt 
+     */
     private void prevButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prevButtonMouseClicked
         // TODO add your handling code here:
         if (month == 0) {
@@ -241,6 +238,11 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
         display_calendar(month, year);
     }//GEN-LAST:event_prevButtonMouseClicked
 
+    /**
+     * This function works to move to next month when the next button is clicked
+     * 
+     * @param evt 
+     */
     private void nextButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextButtonMouseClicked
         // TODO add your handling code here:
         if (month == 11) {
@@ -256,14 +258,12 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
         display_calendar(month, year);
     }//GEN-LAST:event_nextButtonMouseClicked
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
+    /**
+     * This public function shows the days and months
+     * 
+     * @param mo ,It is the integer value of month that user want to see
+     * @param yr ,It is the integer value of year what user want to see
+     */
     public void display_calendar(int mo, int yr) {
         String a = Months[mo] + "  " + yr;
         JLabel label = new JLabel(a);
@@ -272,7 +272,6 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
         label.setForeground(Color.red);
         label.setBounds(100, 20, 450, 60);
         monthPanel.add(label);
-        //monthPanel.setBackground(Color.red);
 
         GridLayout layout = new GridLayout(0, 7);
         calendarPanel.setLayout(layout);
@@ -285,11 +284,11 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
             calendarPanel.add(new JLabel(""));
             calendarPanel.setBorder(border);
         }
-        GregorianCalendar cal1 = new GregorianCalendar(yr,mo,1);
+         cal1 = new GregorianCalendar(yr,mo,1);
         for (int i = 0; i < cal1.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             calendarDay[i] = new JButton(Integer.toString(i + 1));
             calendarDay[i].setFont(f);
-            if ((i + 1) == cal1.get(Calendar.DAY_OF_MONTH)) {
+            if ((i + 1) == cal.get(Calendar.DAY_OF_MONTH)) {
                 calendarDay[i].setBackground(Color.BLUE);
             } else {
                 calendarDay[i].setBackground(new Color(138, 193, 207));
@@ -300,9 +299,14 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Here we convert the selected date to a string.
+     * 
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (int i = 0; i < cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+        for (int i = 0; i < cal1.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             if (e.getSource() == calendarDay[i]) {
                 selected_date=Integer.toString(year)+"-";
                 
@@ -322,8 +326,6 @@ public class calendar extends javax.swing.JFrame implements ActionListener {
                 {
                     selected_date=selected_date+Integer.toString(i+1);
                 }
-                
-                System.out.println(selected_date);
                 dispose();
                 new MainMenu().setVisible(true);
                 break;
